@@ -11,6 +11,7 @@ import { ReactNode, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./store/context";
 import { auth } from "./store/firebase";
+import NoAuthenticatedLayout from "./NoAuthenticatedLayout";
 
 type Props = {
   children?: ReactNode;
@@ -24,6 +25,10 @@ function Layout({ children }: Props) {
     await signOut(auth);
     navigate("/login");
   };
+
+  if (user == null) {
+    return <NoAuthenticatedLayout>{children}</NoAuthenticatedLayout>;
+  }
 
   return (
     <>
@@ -44,8 +49,9 @@ function Layout({ children }: Props) {
             Firebase sample app
           </Typography>
           <Box>
-            <Typography component="p">
-              {user?.email}({user?.uid})
+            <Typography component="span">
+              {user?.email}
+              <br />({user?.uid})
             </Typography>
             <Button color="inherit" onClick={() => navigate("/posts")}>
               <Typography>posts</Typography>

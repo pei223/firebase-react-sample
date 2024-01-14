@@ -41,6 +41,9 @@ function NoAuthenticatedLayout({ children }: Props) {
             <Button color="inherit" onClick={() => navigate("/signup")}>
               <Typography>signup</Typography>
             </Button>
+            <Button color="inherit" onClick={() => navigate("/posts")}>
+              <Typography>posts</Typography>
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>

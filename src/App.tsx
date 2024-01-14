@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { User, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./store/firebase";
 import ProfilePage from "./pages/Profile";
-import { AuthContext } from "./store/context";
+import { AuthContext, AuthContextType } from "./store/context";
 import { SnackbarProvider } from "notistack";
 import PostsPage from "./pages/Posts";
 import UserPage from "./pages/User";
+import RequireAuth from "./RequireAuth";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <ProfilePage />,
+    element: (
+      <RequireAuth>
+        <ProfilePage />
+      </RequireAuth>
+    ),
   },
   {
     path: "/users/:userId",
@@ -34,14 +39,14 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthContextType["user"]>(undefined);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       setUser(user);
       console.log(user);
     });
-  }, []);
+  });
 
   return (
     <SnackbarProvider
