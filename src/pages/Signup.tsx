@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { auth, db } from "../store/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Typography, Box, TextField, Button } from "@mui/material";
 import NoAuthenticatedLayout from "../NoAuthenticatedLayout";
@@ -30,6 +33,9 @@ function Signup() {
         nickname: "default", // 面倒なので初期値指定
         post_count: 0,
       });
+      // 確認用メール
+      sendEmailVerification(userCredential.user);
+      enqueueSnackbar("登録確認メールを送信しました", { variant: "info" });
       navigate("/profile");
     } catch (e) {
       if (!isFirebaseError(e)) {
@@ -52,6 +58,7 @@ function Signup() {
       <Typography variant="h5">ユーザー登録</Typography>
       <Box sx={{ marginTop: 4 }}>
         <TextField
+          id="email"
           label="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
