@@ -84,3 +84,6 @@ https://firebase.google.com/support/guides/security-checklist?hl=ja#security_rul
 ## OAuthのセットアップ
 クライアントID, secret, コールバックURL設定するだけ
 https://docs.github.com/ja/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app
+
+## MFAセットアップ
+https://firebase.google.com/docs/auth/web/multi-factor?hl=ja#enabling_multi-factor_authentication
